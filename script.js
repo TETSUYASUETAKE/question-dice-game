@@ -125,6 +125,10 @@ let selectedCategory = "all";
 let lastQuestionText = "";
 let history = [];
 let faceQuestions = [];
+let isRolling = false;
+let isStopping = false;
+let pendingWinningFace = null;
+let pendingFaceLabel = "";
 
 function getAvailableQuestions() {
   if (selectedCategory === "all") {
@@ -243,6 +247,12 @@ function renderHistory() {
   });
 }
 
+function setCategoryButtonsDisabled(isDisabled) {
+  categoryButtons.forEach((button) => {
+    button.disabled = isDisabled;
+  });
+}
+
 function rollDice() {
   setDiceFaces();
 
@@ -251,29 +261,69 @@ function rollDice() {
     return;
   }
 
-  const winningFace = pickWinningFace();
-  const faceName = FACE_NAMES[winningFace.index];
-  const faceLabel = FACE_LABELS[winningFace.index];
-
-  rollButton.disabled = true;
+  pendingWinningFace = null;
+  pendingFaceLabel = "";
+  isRolling = true;
+  isStopping = false;
+  rollButton.textContent = "サイコロを止める";
+  rollButton.setAttribute("aria-label", "サイコロを止めて質問を出す");
+  setCategoryButtonsDisabled(true);
   questionTitle.textContent = "サイコロ回転中";
-  questionText.textContent = "正面に出る質問を見ていてね。";
+  questionText.textContent = "もう一度ボタンを押すと止まるよ。";
   currentCategory.textContent = selectedCategory === "all" ? "ぜんぶ" : selectedCategory;
-  setDiceRotation(faceName);
   dice.classList.remove("is-rolling");
+  dice.classList.remove("is-stopping");
   cubeScene.classList.remove("is-rolling");
+  cubeScene.classList.remove("is-stopping");
   void dice.offsetWidth;
   void cubeScene.offsetWidth;
   dice.classList.add("is-rolling");
   cubeScene.classList.add("is-rolling");
+}
+
+function stopDice() {
+  if (!isRolling || isStopping) {
+    return;
+  }
+
+  pendingWinningFace = pickWinningFace();
+  const faceName = FACE_NAMES[pendingWinningFace.index];
+  pendingFaceLabel = FACE_LABELS[pendingWinningFace.index];
+
+  isRolling = false;
+  isStopping = true;
+  rollButton.disabled = true;
+  rollButton.textContent = "止まっています";
+  setDiceRotation(faceName);
+  dice.classList.remove("is-rolling");
+  cubeScene.classList.remove("is-rolling");
+  dice.classList.remove("is-stopping");
+  cubeScene.classList.remove("is-stopping");
+  void dice.offsetWidth;
+  void cubeScene.offsetWidth;
+  dice.classList.add("is-stopping");
+  cubeScene.classList.add("is-stopping");
 
   window.setTimeout(() => {
-    renderQuestion(winningFace.question, faceLabel);
-    dice.classList.remove("is-rolling");
-    cubeScene.classList.remove("is-rolling");
+    renderQuestion(pendingWinningFace.question, pendingFaceLabel);
+    dice.classList.remove("is-stopping");
+    cubeScene.classList.remove("is-stopping");
     rollButton.disabled = false;
+    rollButton.textContent = "もう一度ふる";
+    rollButton.setAttribute("aria-label", "サイコロを振って質問を出す");
+    setCategoryButtonsDisabled(false);
+    isStopping = false;
     rollButton.focus();
-  }, 1850);
+  }, 900);
+}
+
+function handleRollButtonClick() {
+  if (isRolling) {
+    stopDice();
+    return;
+  }
+
+  rollDice();
 }
 
 function selectCategory(button) {
@@ -291,7 +341,7 @@ function selectCategory(button) {
 }
 
 setDiceFaces();
-rollButton.addEventListener("click", rollDice);
+rollButton.addEventListener("click", handleRollButtonClick);
 
 categoryButtons.forEach((button) => {
   button.addEventListener("click", () => selectCategory(button));
