@@ -186,18 +186,19 @@ function setDiceFaces() {
 
 function setDiceRotation(faceName) {
   const rotation = FACE_ROTATIONS[faceName];
-  const extraTurnsX = 360 * (2 + Math.floor(Math.random() * 2));
-  const extraTurnsY = 360 * (2 + Math.floor(Math.random() * 2));
+  const extraTurnsX = 360 * (3 + Math.floor(Math.random() * 2));
+  const extraTurnsY = 360 * (3 + Math.floor(Math.random() * 2));
   const rollDirection = Math.random() > 0.5 ? 1 : -1;
 
   dice.style.setProperty("--spin-start-x", `${rotation.x - extraTurnsX}deg`);
   dice.style.setProperty("--spin-start-y", `${rotation.y + extraTurnsY}deg`);
-  dice.style.setProperty("--spin-mid-x", `${rotation.x + 260}deg`);
-  dice.style.setProperty("--spin-mid-y", `${rotation.y - 320}deg`);
+  dice.style.setProperty("--spin-mid-x", `${rotation.x + 620}deg`);
+  dice.style.setProperty("--spin-mid-y", `${rotation.y - 760}deg`);
   dice.style.setProperty("--spin-end-x", `${rotation.x}deg`);
   dice.style.setProperty("--spin-end-y", `${rotation.y}deg`);
-  dice.style.setProperty("--hop-start-x", `${rollDirection * -72}px`);
-  dice.style.setProperty("--hop-mid-x", `${rollDirection * 42}px`);
+  dice.style.setProperty("--hop-start-x", `${rollDirection * -86}px`);
+  dice.style.setProperty("--hop-mid-x", `${rollDirection * 52}px`);
+  dice.style.setProperty("--roll-z", `${rollDirection * 24}deg`);
 }
 
 function renderQuestion(question, faceLabel) {
@@ -272,7 +273,7 @@ function rollDice() {
     cubeScene.classList.remove("is-rolling");
     rollButton.disabled = false;
     rollButton.focus();
-  }, 1480);
+  }, 1850);
 }
 
 function selectCategory(button) {
