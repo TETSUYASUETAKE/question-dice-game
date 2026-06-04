@@ -1,0 +1,26 @@
+{
+  "name": "質問サイコロ",
+  "short_name": "質問サイコロ",
+  "description": "サイコロを振って、楽しい質問をランダムに出すスマホ向けWebゲームです。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff7e8",
+  "theme_color": "#f7b267",
+  "orientation": "portrait-primary",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%23fff7e8'/%3E%3Crect x='38' y='38' width='116' height='116' rx='26' fill='%23ffffff' stroke='%23f7b267' stroke-width='10'/%3E%3Ccircle cx='70' cy='70' r='10' fill='%23d87743'/%3E%3Ccircle cx='96' cy='96' r='10' fill='%23d87743'/%3E%3Ccircle cx='122' cy='122' r='10' fill='%23d87743'/%3E%3Ctext x='96' y='177' text-anchor='middle' font-size='22' font-family='sans-serif' font-weight='700' fill='%233d3328'%3EQ%3C/text%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23fff7e8'/%3E%3Crect x='94' y='94' width='324' height='324' rx='72' fill='%23ffffff' stroke='%23f7b267' stroke-width='28'/%3E%3Ccircle cx='176' cy='176' r='28' fill='%23d87743'/%3E%3Ccircle cx='256' cy='256' r='28' fill='%23d87743'/%3E%3Ccircle cx='336' cy='336' r='28' fill='%23d87743'/%3E%3Ctext x='256' y='474' text-anchor='middle' font-size='64' font-family='sans-serif' font-weight='700' fill='%233d3328'%3EQ%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
