@@ -129,6 +129,7 @@ let isRolling = false;
 let isStopping = false;
 let pendingWinningFace = null;
 let pendingFaceLabel = "";
+let pendingStoppedTransform = "";
 
 function getAvailableQuestions() {
   if (selectedCategory === "all") {
@@ -190,19 +191,24 @@ function setDiceFaces() {
 
 function setDiceRotation(faceName) {
   const rotation = FACE_ROTATIONS[faceName];
-  const extraTurnsX = 360 * (3 + Math.floor(Math.random() * 2));
-  const extraTurnsY = 360 * (3 + Math.floor(Math.random() * 2));
+  const extraTurnsX = 360 * 2;
+  const extraTurnsY = 360 * 2;
   const rollDirection = Math.random() > 0.5 ? 1 : -1;
+  const viewX = rotation.x - 10;
+  const viewY = rotation.y + 14;
 
   dice.style.setProperty("--spin-start-x", `${rotation.x - extraTurnsX}deg`);
   dice.style.setProperty("--spin-start-y", `${rotation.y + extraTurnsY}deg`);
-  dice.style.setProperty("--spin-mid-x", `${rotation.x + 620}deg`);
-  dice.style.setProperty("--spin-mid-y", `${rotation.y - 760}deg`);
+  dice.style.setProperty("--spin-mid-x", `${rotation.x + 360}deg`);
+  dice.style.setProperty("--spin-mid-y", `${rotation.y - 440}deg`);
   dice.style.setProperty("--spin-end-x", `${rotation.x}deg`);
   dice.style.setProperty("--spin-end-y", `${rotation.y}deg`);
-  dice.style.setProperty("--hop-start-x", `${rollDirection * -86}px`);
-  dice.style.setProperty("--hop-mid-x", `${rollDirection * 52}px`);
+  dice.style.setProperty("--spin-view-x", `${viewX}deg`);
+  dice.style.setProperty("--spin-view-y", `${viewY}deg`);
+  dice.style.setProperty("--hop-start-x", `${rollDirection * -38}px`);
+  dice.style.setProperty("--hop-mid-x", `${rollDirection * 24}px`);
   dice.style.setProperty("--roll-z", `${rollDirection * 24}deg`);
+  pendingStoppedTransform = `translate3d(0, 0, 0) rotateX(${viewX}deg) rotateY(${viewY}deg) rotateZ(0deg)`;
 }
 
 function renderQuestion(question, faceLabel) {
@@ -268,6 +274,7 @@ function rollDice() {
   rollButton.textContent = "サイコロを止める";
   rollButton.setAttribute("aria-label", "サイコロを止めて質問を出す");
   setCategoryButtonsDisabled(true);
+  dice.style.transform = "";
   questionTitle.textContent = "サイコロ回転中";
   questionText.textContent = "もう一度ボタンを押すと止まるよ。";
   currentCategory.textContent = selectedCategory === "all" ? "ぜんぶ" : selectedCategory;
@@ -295,6 +302,7 @@ function stopDice() {
   rollButton.disabled = true;
   rollButton.textContent = "止まっています";
   setDiceRotation(faceName);
+  dice.style.transform = "";
   dice.classList.remove("is-rolling");
   cubeScene.classList.remove("is-rolling");
   dice.classList.remove("is-stopping");
@@ -308,6 +316,7 @@ function stopDice() {
     renderQuestion(pendingWinningFace.question, pendingFaceLabel);
     dice.classList.remove("is-stopping");
     cubeScene.classList.remove("is-stopping");
+    dice.style.transform = pendingStoppedTransform;
     rollButton.disabled = false;
     rollButton.textContent = "もう一度ふる";
     rollButton.setAttribute("aria-label", "サイコロを振って質問を出す");
