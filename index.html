@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="質問サイコロ">
-  <meta name="description" content="サイコロを振って、楽しい質問をランダムに出すスマホ向けWebゲームです。">
+  <meta name="description" content="6面に質問が書かれた3Dサイコロを振って、正面に出た質問に答えるスマホ向けWebゲームです。">
   <title>質問サイコロ</title>
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
@@ -17,7 +17,7 @@
     <section class="top-area" aria-labelledby="app-title">
       <p class="app-label">やさしい質問ゲーム</p>
       <h1 id="app-title">質問サイコロ</h1>
-      <p class="lead">カテゴリを選んで、サイコロをころん。出た質問でおしゃべりしよう。</p>
+      <p class="lead">カテゴリを選んで、質問が書かれたサイコロをくるん。正面に出た質問に答えよう。</p>
     </section>
 
     <section class="category-panel" aria-label="質問カテゴリ">
@@ -29,13 +29,33 @@
     </section>
 
     <section class="dice-stage" aria-live="polite">
-      <div class="dice" id="dice" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+      <div class="cube-scene" aria-hidden="true">
+        <div class="dice" id="dice">
+          <div class="dice-face dice-face-front">
+            <span class="face-label">正面</span>
+            <span class="face-text">質問を準備中</span>
+          </div>
+          <div class="dice-face dice-face-right">
+            <span class="face-label">右</span>
+            <span class="face-text">質問を準備中</span>
+          </div>
+          <div class="dice-face dice-face-back">
+            <span class="face-label">うしろ</span>
+            <span class="face-text">質問を準備中</span>
+          </div>
+          <div class="dice-face dice-face-left">
+            <span class="face-label">左</span>
+            <span class="face-text">質問を準備中</span>
+          </div>
+          <div class="dice-face dice-face-top">
+            <span class="face-label">上</span>
+            <span class="face-text">質問を準備中</span>
+          </div>
+          <div class="dice-face dice-face-bottom">
+            <span class="face-label">下</span>
+            <span class="face-text">質問を準備中</span>
+          </div>
+        </div>
       </div>
       <button class="roll-button" id="rollButton" type="button" aria-label="サイコロを振って質問を出す">サイコロをふる</button>
     </section>

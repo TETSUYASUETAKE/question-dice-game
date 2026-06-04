@@ -1,7 +1,7 @@
 {
   "name": "質問サイコロ",
   "short_name": "質問サイコロ",
-  "description": "サイコロを振って、楽しい質問をランダムに出すスマホ向けWebゲームです。",
+  "description": "6面に質問が書かれた3Dサイコロを振って、正面に出た質問に答えるスマホ向けWebゲームです。",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
