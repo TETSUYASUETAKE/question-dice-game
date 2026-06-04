@@ -112,6 +112,7 @@ const FACE_ROTATIONS = {
 };
 
 const dice = document.getElementById("dice");
+const cubeScene = document.querySelector(".cube-scene");
 const diceFaces = document.querySelectorAll(".dice-face");
 const rollButton = document.getElementById("rollButton");
 const questionTitle = document.getElementById("question-title");
@@ -187,6 +188,7 @@ function setDiceRotation(faceName) {
   const rotation = FACE_ROTATIONS[faceName];
   const extraTurnsX = 360 * (2 + Math.floor(Math.random() * 2));
   const extraTurnsY = 360 * (2 + Math.floor(Math.random() * 2));
+  const rollDirection = Math.random() > 0.5 ? 1 : -1;
 
   dice.style.setProperty("--spin-start-x", `${rotation.x - extraTurnsX}deg`);
   dice.style.setProperty("--spin-start-y", `${rotation.y + extraTurnsY}deg`);
@@ -194,6 +196,8 @@ function setDiceRotation(faceName) {
   dice.style.setProperty("--spin-mid-y", `${rotation.y - 320}deg`);
   dice.style.setProperty("--spin-end-x", `${rotation.x}deg`);
   dice.style.setProperty("--spin-end-y", `${rotation.y}deg`);
+  dice.style.setProperty("--hop-start-x", `${rollDirection * -72}px`);
+  dice.style.setProperty("--hop-mid-x", `${rollDirection * 42}px`);
 }
 
 function renderQuestion(question, faceLabel) {
@@ -256,15 +260,19 @@ function rollDice() {
   currentCategory.textContent = selectedCategory === "all" ? "ぜんぶ" : selectedCategory;
   setDiceRotation(faceName);
   dice.classList.remove("is-rolling");
+  cubeScene.classList.remove("is-rolling");
   void dice.offsetWidth;
+  void cubeScene.offsetWidth;
   dice.classList.add("is-rolling");
+  cubeScene.classList.add("is-rolling");
 
   window.setTimeout(() => {
     renderQuestion(winningFace.question, faceLabel);
     dice.classList.remove("is-rolling");
+    cubeScene.classList.remove("is-rolling");
     rollButton.disabled = false;
     rollButton.focus();
-  }, 1280);
+  }, 1480);
 }
 
 function selectCategory(button) {
